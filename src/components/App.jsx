@@ -1,37 +1,35 @@
+import { useAuth } from 'hooks/useAuth';
+import { useEffect } from 'react';
+import { lazy } from 'react';
+import { useDispatch } from 'react-redux';
+import { Route, Routes } from 'react-router-dom';
+import { refreshUser } from 'redux/auth/authOperations';
+import { Layout } from './Layout';
+import { PrivateRout } from './PrivateRoute';
+import { RestrictedRout } from './RestrictedRoute';
 
-import { useSelector } from 'react-redux';
-import { AppWrap } from "./App.styled";
-import { ContactForm } from "./ContactForm";
-import { ContactList } from "./ContactList";
-import { Filter } from "./Filter";
-import { toast, ToastContainer } from "react-toastify";
-import PropTypes from "prop-types";
-import { getIsLoading, getError } from 'redux/selectors';
-import { Loader } from './Loader/Loader';
+const HomePage = lazy(() => import('../pages/Home/Home')); 
+const RegisterPage = lazy(() => import('../pages/Register/Register')); 
+const LoginPage = lazy(() => import('../pages/Login/Login')); 
+const PhonebookPage = lazy(() => import('../pages/Phonebook/Phonebook')); 
 
-export function App() {
-  const isLoading = useSelector(getIsLoading);
-  const isError = useSelector(getError);
+export const App = () => {
+  const dispatch = useDispatch();
+  const { isRefreshing } = useAuth();
 
-  return (
-    <>
-      <AppWrap>
-        <h1>Phonebook</h1>
-        <ContactForm />
-        <h2>Contacts</h2>
-        <Filter />
-        {isLoading && !isError && <Loader />}
-        {isError && !isLoading && toast.error(isError)}
-        <ContactList />
-        <ToastContainer autoClose={3000} />
-      </AppWrap>
-    </>
-  );
+  useEffect(() => {
+    dispatch(refreshUser())
+  }, [dispatch])
+  return isRefreshing ? (
+    'Fetching user data...') : (
+      <Routes>
+      <Route path='/' element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route path='/register' element={<RestrictedRout component={RegisterPage} redirectTo='/phonebook' />}/>
+        <Route path='/login' element={<RestrictedRout component={LoginPage} redirectTo='/phonebook' />}/>
+        <Route path='/phonebook' element={<PrivateRout component={PhonebookPage} redirectTo='/login' />} />
+      </Route>
+    </Routes>
+    )
+  
 }
-
-App.propTypes = {
-  state: PropTypes.objectOf({
-    contacts: PropTypes.array.isRequired,
-    filter: PropTypes.string.isRequired,
-  }),
-};

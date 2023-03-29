@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
-import { selectVisibleContacts } from "redux/selectors";
+import { selectVisibleContacts } from "redux/contacts/selectors";
 import { ContactWrap } from './ContactList.styled';
-import * as contactOperations from '../../redux/contactsOperations';
+import * as contactOperations from 'redux/contacts/contactsOperations';
 import { useEffect } from "react";
 
 export const ContactList = () => {

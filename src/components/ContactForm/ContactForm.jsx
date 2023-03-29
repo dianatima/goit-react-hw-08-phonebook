@@ -2,10 +2,10 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { ContactFormWrap, InputWrap, Button } from "./ContactForm.styled";
 import { nanoid } from 'nanoid';
-import { getContacts } from "redux/selectors";
+import { getContacts } from "redux/contacts/selectors";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import * as contactOperations from '../../redux/contactsOperations';
+import * as contactOperations from 'redux/contacts/contactsOperations';
 
 export function ContactForm() {
   const [name, setName] = useState('');
