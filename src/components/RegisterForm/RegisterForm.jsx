@@ -1,7 +1,6 @@
 import { useDispatch } from "react-redux";
 import { register } from "redux/auth/authOperations";
 import Container from "@mui/material/Container";
-import CssBaseline from "@mui/material/CssBaseline";
 import Avatar from "@mui/material/Avatar";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
@@ -27,7 +26,6 @@ export const RegisterForm = () => {
   return (
     <>
       <Container component="main" maxWidth="xs">
-        {/* <CssBaseline /> */}
         <Box
           sx={{
             marginTop: 8,

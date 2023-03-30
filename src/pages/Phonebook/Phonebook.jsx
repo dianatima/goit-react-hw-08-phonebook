@@ -1,12 +1,11 @@
-
-import { useSelector } from 'react-redux';
-import { AppWrap } from "components/App.styled";
+import { useSelector } from "react-redux";
+import { AppWrap, TitleWrap } from "./Phonebook.styled";
 import { ContactForm } from "components/ContactForm";
 import { ContactList } from "components/ContactList";
 import { Filter } from "components/Filter";
 import { toast, ToastContainer } from "react-toastify";
-import { getIsLoading, getError } from 'redux/contacts/selectors';
-import { Loader } from 'components/Loader/Loader';
+import { getIsLoading, getError } from "redux/contacts/selectors";
+import { Loader } from "components/Loader/Loader";
 
 export default function Phonebook() {
   const isLoading = useSelector(getIsLoading);
@@ -15,9 +14,9 @@ export default function Phonebook() {
   return (
     <>
       <AppWrap>
-        <h1>Phonebook</h1>
+        <TitleWrap>Phonebook</TitleWrap>
         <ContactForm />
-        <h2>Contacts</h2>
+        <TitleWrap>Contacts</TitleWrap>
         <Filter />
         {isLoading && !isError && <Loader />}
         {isError && !isLoading && toast.error(isError)}
